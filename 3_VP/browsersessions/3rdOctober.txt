@@ -1,0 +1,5 @@
+https://claude.ai/chat/0396627a-980e-49fd-87f3-7dfffbf3f56b
+https://leetcode.com/problems/valid-palindrome/submissions/2160700112/
+how to use isalnum in python
+how to change character to lowercase in python
+.strip() python
