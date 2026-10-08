@@ -1,4 +1,20 @@
 
+def manual_int_to_string_conversion(string):
+    sign = string[0]
+    start_index = 0
+    transformed_result = 0
+    if sign == "-":
+        start_index = 1
+        multiply_by = -1
+    else:
+        multiply_by = 1
+    for char in string[start_index:len(string)]:
+        digit = ord(char) - ord('0')
+        transformed_result = (transformed_result * 10) + digit
+    return transformed_result * multiply_by
+
+
+
 def myAtoi(s: str) -> int:
     new_string = ""
     sign_count = 0
@@ -22,9 +38,9 @@ def myAtoi(s: str) -> int:
             continue
 
     if len(new_string) >= 1 and new_string.strip("+").isdigit():
-        result = int(new_string)
+        result = manual_int_to_string_conversion(new_string.strip("+"))
     elif len(new_string) >= 1 and new_string.strip("-").isdigit():
-        result = int(new_string)
+        result = manual_int_to_string_conversion(new_string)
     else:
         result = 0
 
@@ -37,7 +53,8 @@ def myAtoi(s: str) -> int:
 
 
 print(myAtoi("+-12"))
-print(myAtoi("-042"))
+print(myAtoi("-42"))
 print(myAtoi("1337c0d3"))
 print(myAtoi("0-1"))
 print(myAtoi("words and 987"))
+
