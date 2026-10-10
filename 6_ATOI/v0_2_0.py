@@ -1,49 +1,4 @@
-"""
-def myAtoi(s: str) -> int:
-    new_string = ""
-    sign_count = 0
-    for ch in s:
-        if ch == " " and len(new_string) < 1:
-            continue
-        if ch == " " and len(new_string) >= 1:
-            break
-        if (ch == "+" or ch == "-") and (sign_count == 0) and len(new_string) < 1:
-            new_string += ch
-            sign_count += 1
-            continue
-        if (ch == "+" or ch == "-") and len(new_string) >= 1:
-            break
-        if ch.isalpha():
-            break
-        if ch == ".":
-            break
-        if ch.isdigit():
-            new_string += ch
-            continue
-
-    if len(new_string) >= 1:
-        result = int(new_string)
-    else:
-        result = 0
-
-    if result > (2 ** 31 - 1):
-        return 2 ** 31 - 1
-    elif result < (-(2 ** 31)):
-        return -(2 ** 31)
-    else:
-        return result
-"""
-
-"""
-print(myAtoi("42"))
-print(myAtoi("-042"))
-print(myAtoi("1337c0d3"))
-print(myAtoi("0-1"))
-print(myAtoi("words and 987"))
-"""
-
-
-def test_myAtoi(myAtoi_func):
+def test_myatoi(myatoi_func):
     test_cases = [
         # Original tests
         "42", "-042", "1337c0d3", "0-1", "words and 987",
@@ -82,7 +37,7 @@ def test_myAtoi(myAtoi_func):
         expected = expected_results[i]
 
         try:
-            actual = myAtoi_func(tc)
+            actual = myatoi_func(tc)
             if actual == expected:
                 status = "✅ PASS"
                 passed += 1
@@ -123,6 +78,9 @@ def manual_int_to_string_conversion(string):
     if sign == "-":
         start_index = 1
         multiply_by = -1
+    elif sign == "+":
+        start_index = 1
+        multiply_by = 1
     else:
         multiply_by = 1
     for char in string[start_index:len(string)]:
@@ -132,34 +90,29 @@ def manual_int_to_string_conversion(string):
 
 
 # --- PASTE YOUR myAtoi FUNCTION HERE ---
-def myAtoi(s: str) -> int:
+def myatoi(s: str) -> int:
     new_string = ""
-    sign_count = 0
-    for ch in s:
-        if ch == " " and len(new_string) < 1:
-            continue
-        if ch == " " and len(new_string) >= 1:
+    s = s.strip()
+    if len(s) == 0:
+        return 0
+    if s[0].isalpha() or s[0] == ".":
+        return 0
+    if s[0] in ("+", "-"):
+        if len(s) >= 2:
+            if s[1] not in ("+", "-", " ") and (not s[1].isalpha()) and (s[1] != "."):
+                pass
+            else:
+                return 0
+        else:
+            return 0
+    new_string += s[0]
+    for char in s[1::]:
+        if char.isdigit():
+            new_string += char
+        else:
             break
-        if (ch == "+" or ch == "-") and (sign_count == 0) and len(new_string) < 1:
-            new_string += ch
-            sign_count += 1
-            continue
-        if (ch == "+" or ch == "-") and len(new_string) >= 1:
-            break
-        if ch.isalpha():
-            break
-        if ch == ".":
-            break
-        if ch.isdigit():
-            new_string += ch
-            continue
 
-    if len(new_string) >= 1 and new_string.strip("+").isdigit():
-        result = manual_int_to_string_conversion(new_string.strip("+"))
-    elif len(new_string) >= 1 and new_string.strip("-").isdigit():
-        result = manual_int_to_string_conversion(new_string)
-    else:
-        result = 0
+    result = manual_int_to_string_conversion(new_string)
 
     if result > (2 ** 31 - 1):
         return 2 ** 31 - 1
@@ -171,4 +124,6 @@ def myAtoi(s: str) -> int:
 
 # Run the test harness
 if __name__ == "__main__":
-    test_myAtoi(myAtoi)
+    print("   +0 123".strip())
+    test_myatoi(myatoi)
+    # myatoi("   +0 123")
